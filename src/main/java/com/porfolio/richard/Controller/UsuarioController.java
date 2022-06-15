@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 
-@CrossOrigin(origins= {"https://porfolioap1.web.app/porfolio"})
+@CrossOrigin(origins= {"https://porfolioap1.web.app"})
 
 /*@CrossOrigin(origins= {"*"})*/
 
