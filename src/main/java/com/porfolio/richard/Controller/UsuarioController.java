@@ -15,8 +15,9 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 
 @RestController
-@RequestMapping("/usuario")
-@CrossOrigin(origins= {"*"})
+*@CrossOrigin(origins= {"
+https://porfolioap1.web.app/porfoliong"})
+/*@CrossOrigin(origins= {"*"})*/
 public class UsuarioController{
 	private final UsuarioService usuarioService;
 	
