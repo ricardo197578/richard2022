@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 /*@CrossOrigin(origins= {"https://porfolioap1.web.app"})*/
 
-/*@CrossOrigin(origins= {"*"})*/
+@CrossOrigin(origins= {"*"})
 
 public class UsuarioController{
 	private final UsuarioService usuarioService;
