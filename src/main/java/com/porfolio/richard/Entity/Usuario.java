@@ -1,96 +1,90 @@
 package com.porfolio.richard.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.validation.constraints.Size;
-import javax.validation.constraints.NotNull;
-import java.io.Serializable;
-import java.util.List;
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+public class Usuario {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-public class Usuario implements Serializable {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@NotNull                                              @Size (min = 1, max = 50,message = "LONGITUD INCORRECTA")
-	private String nombre;
-	@NotNull
-	@Size(min = 1,max = 50,message = "LONGITUD INCORRECTA")
-	private String apellido;
+    @NotNull
+    private String nombre;
 
-	private String titulo;
+    @NotNull
+    @Column(unique = true)
+    private String nombreUsuario;
 
-	private String descripcion;
+    @NotNull
+    @Column(unique = true)
+    private String email;
 
-	@Size(min =1,max = 50 ,message= "LONGITUD INCORRECTA")
-	private String img;
-	
-	@OneToMany(fetch = FetchType.LAZY,mappedBy ="idEdu")
-	private List<Educacion> educacionList;
-	@OneToMany(fetch = FetchType.LAZY,mappedBy ="idSkill")
-	private List<Skills>skillList;
-	@OneToMany(fetch = FetchType.LAZY,mappedBy ="idExp")
-	private List<Experiencia> experienciaList;
+    @NotNull
+    private String password;
 
-	
-	public Usuario(){
-	}
-	
-	public Usuario (Long id,String nombre,String apellido,String titulo,String descripcion,String img){
-		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.titulo = titulo;
-		this.descripcion = descripcion;
-		this.img = img;
+    @NotNull
+    @ManyToMany
+    @JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id"), inverseJoinColumns = @JoinColumn(name = "rol_id"))
+    private Set<Rol> roles = new HashSet<>();
 
-	}
+    public Usuario() {
+    }
 
-	/*getter y setter*/
-	public Long getId(){
-		return id;
-	}
-	public void setId(Long id){
-		this.id=id;
-	}
-	public String getNombre(){
-		return nombre;
-	}
-	public void setNombre(String nombre){
-		this.nombre=nombre;
-	}
-	public String getApellido(){
-		return apellido;
-	}
-	public void setApellido(String apellido){
-		this.apellido=apellido;
-	}
+    public Usuario(@NotNull String nombre, @NotNull String nombreUsuario, @NotNull String email, @NotNull String password) {
+        this.nombre = nombre;
+        this.nombreUsuario = nombreUsuario;
+        this.email = email;
+        this.password = password;
+    }
 
-	public String getTitulo(){
-		return titulo;
-	}
-	public void setTitulo(String titulo){
-		this.titulo = titulo;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getDescripcion(){
-		return descripcion;
-	}
-	public void setDescripcion(String descripcion){
-		this.descripcion = descripcion;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getImg(){
-		return img;
-	}
-	public void setImg(String img){
-		this.img=img;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Rol> roles) {
+        this.roles = roles;
+    }
 }

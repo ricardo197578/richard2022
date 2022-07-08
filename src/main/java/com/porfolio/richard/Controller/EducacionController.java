@@ -39,7 +39,9 @@ public class EducacionController{
         @PutMapping("/update")
         public ResponseEntity<Educacion>editarEducacion(@RequestBody Educacion educacion){
                 Educacion updateEducacion = educacionService.editarEducacion(educacion);          
-        return new ResponseEntity<>(updateEducacion,HttpStatus.OK);              }
+        return new ResponseEntity<>(updateEducacion,HttpStatus.OK);    
+
+	}
 	@PostMapping("/add")
 	  public ResponseEntity<Educacion>crearEducacion(@RequestBody Educacion educacion){
 	 Educacion nuevaEducacion=educacionService.addEducacion(educacion);
