@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/porfolio")
-@CrossOrigin(origins= {"*"})
+//@CrossOrigin(origins= {"*"})
 
 public class PersonaController{
 	private final PersonaService personaService;
