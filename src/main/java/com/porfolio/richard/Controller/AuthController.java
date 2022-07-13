@@ -30,12 +30,12 @@ import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
 
-//import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
 @RestController
 
 
-//@CrossOrigin(origins= {"*"})
+@CrossOrigin(origins= {"*"})
 @RequestMapping("/api/auth")
 public class AuthController {
 
