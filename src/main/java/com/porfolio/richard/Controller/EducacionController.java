@@ -1,56 +1,68 @@
 package com.porfolio.richard.Controller;
 
+import com.porfolio.richard.DTO.Mensaje;
 import com.porfolio.richard.Entity.Educacion;
 import com.porfolio.richard.Service.EducacionService;
-import org.springframework.http.ResponseEntity;
-
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
+
 import java.util.List;
 
 
 @RestController
-@RequestMapping("/educacion")
+@RequestMapping("/api/educacion")
 @CrossOrigin(origins= {"*"})
-public class EducacionController{
-        private final EducacionService educacionService;
 
-        /*consructor*/
-        public EducacionController(EducacionService educacionService){
-                this.educacionService = educacionService;
-        }
+public class EducacionController {
 
-        /*get mapping para que en la direccion indicada nos traiga el usuario*/
-        @GetMapping("/all")
-        public ResponseEntity<List<Educacion>>obtenerEducacion(){
-                List<Educacion> educaciones = educacionService.buscarEducaciones();
-                return new ResponseEntity<>(educaciones,HttpStatus.OK);
-        }
+    @Autowired
+    EducacionService educacionService;
 
-        /*para editar uso put*/
-        @PutMapping("/update")
-        public ResponseEntity<Educacion>editarEducacion(@RequestBody Educacion educacion){
-                Educacion updateEducacion = educacionService.editarEducacion(educacion);          
-        return new ResponseEntity<>(updateEducacion,HttpStatus.OK);    
+@GetMapping("/lista")
+    public ResponseEntity<List<Educacion>> getLista(){
+        List<Educacion> lista = educacionService.obtenerTodos();
+        return new ResponseEntity<List<Educacion>>(lista, HttpStatus.OK);
+    }
+    @GetMapping("/detalle/{id}")
+    public ResponseEntity<Educacion> getOne(@PathVariable Long id){
+        Educacion educacion = educacionService.obtenerPorId(id).get();
+        return new ResponseEntity<Educacion>(educacion, HttpStatus.OK);
+    }
 
-	}
-	@PostMapping("/add")
-	  public ResponseEntity<Educacion>crearEducacion(@RequestBody Educacion educacion){
-	 Educacion nuevaEducacion=educacionService.addEducacion(educacion);
-	 return new ResponseEntity<>(nuevaEducacion,HttpStatus.CREATED);
-	  }
-	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?>borrarEducacion(@PathVariable("id")Long id){
-		educacionService.borrarEducacion(id);
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
+ 
+
+    @PostMapping("nuevo")
+    public ResponseEntity<?> create(@RequestBody  Educacion educacion){
+        
+        return educacionService.guardar(educacion);
+        
+    }
+
+    @PutMapping("/actualizar/{id}")
+    public ResponseEntity<?> update(@RequestBody Educacion educacion, @PathVariable("id") Long id){
+	Educacion educacionUpdate = educacionService.obtenerPorId(id).get();
+
+        educacionUpdate.setTituloEdu(educacion.getTituloEdu());
+        educacionUpdate.setFechaEdu(educacion.getFechaEdu());
+	 educacionUpdate.setFechaEdu(educacion.getFechaEdu());
+	 educacionUpdate.setDescEdu(educacion.getDescEdu());
+	 educacionUpdate.setImagenEdu(educacion.getImagenEdu());
+
+
+
+        return educacionService.guardar(educacionUpdate);
+        
+    }
+
+
+    @DeleteMapping("/borrar/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id){
+             educacionService.borrar(id);
+        
+    }
 }
 
