@@ -36,7 +36,7 @@ public class SkillsController {
 
 
     @PostMapping("nuevo")
-    public ResponseEntity<?> create(@RequestBody  Skills skillsn){
+    public ResponseEntity<?> create(@RequestBody  Skills skills){
 
         return skillsService.guardar(skills);
 
